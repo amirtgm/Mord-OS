@@ -1,14 +1,13 @@
-import React, { memo, useContext, useEffect } from "react";
+import React, { memo, useContext } from "react";
 import { useDrag } from "react-dnd";
-import { getEmptyImage } from "react-dnd-html5-backend";
 import { BoxesContext } from "../providers/boxes.provider";
-interface IWindowProps {
+import { apps } from "../types/apps";
+import { Box } from "../types/box";
+import Browser from "./Apps/Browser.app";
+import Gallery from "./Apps/Gallery.app";
+import Reader from "./Apps/Reader.app";
+interface IWindowProps extends Box {
   children: React.ReactNode;
-  id: string;
-  top: number | string;
-  left: number | string;
-  index: number;
-  key: number | string;
 }
 const getStyles = ({ left, top, index, isDragging }: any) => {
   const transform = `translate3d(${left}px, ${top}px, 0)`;
@@ -16,16 +15,11 @@ const getStyles = ({ left, top, index, isDragging }: any) => {
     transform,
     WebkitTransform: transform,
     zIndex: index,
-    // IE fallback: hide the real node using CSS when dragging
-    // because IE will ignore our custom "empty image" drag preview.
-    opacity: isDragging ? 0 : 1,
-    height: isDragging ? 0 : "",
   };
 };
-
-const AppWindow: React.FC<IWindowProps> = memo(
-  ({ id, left, top, index, children }) => {
-    const { closeApp } = useContext(BoxesContext);
+const AppBox: React.FC<IWindowProps> = memo(
+  ({ id, left, app, top, index, children }) => {
+    const { closeBox } = useContext(BoxesContext);
     const [{ isDragging }, drag] = useDrag(
       () => ({
         type: "window",
@@ -36,26 +30,39 @@ const AppWindow: React.FC<IWindowProps> = memo(
       }),
       [id, left, top]
     );
+    const appLoader = () => {
+      switch (app) {
+        case apps.BROWSER:
+          return <Browser />;
+        case apps.GALLERY:
+          return <Gallery />;
+        case apps.READER:
+          return <Reader />;
 
-    console.log(id, left, top);
+        default:
+          break;
+      }
+    };
+
     return (
       <div
         ref={drag}
         style={getStyles({ left, top, isDragging, index })}
         className="absolute flex flex-col justify-between overflow-hidden rounded-lg resize w-80 h-80 frost"
+        // eslint-disable-next-line jsx-a11y/aria-role
         role="DraggableBox"
       >
         <div className="flex justify-end w-full p-1 bg-gray-500">
           <div className="w-3 h-3 mx-1 bg-green-400 rounded-full hover:bg-green-600"></div>
           <div className="w-3 h-3 mx-1 bg-yellow-400 rounded-full hover:bg-yellow-600"></div>
           <div
-            onClick={() => closeApp(id)}
+            onClick={() => closeBox(id)}
             className="w-3 h-3 mx-1 bg-red-400 rounded-full hover:bg-red-600"
           ></div>
         </div>
-        <div className="flex-auto"></div>
+        <div className="flex-auto">{appLoader()}</div>
       </div>
     );
   }
 );
-export default AppWindow;
+export default AppBox;

@@ -1,8 +1,6 @@
-import { useCallback, useContext, useState } from "react";
+import { useContext } from "react";
 import { useDrop } from "react-dnd";
-import { App } from "./Apps.constant";
-import update from "update-immutable";
-import AppWindow from "./AppWindow";
+import AppWindow from "./AppBox";
 import { BoxesContext } from "../providers/boxes.provider";
 
 const AppContainer: React.FC = () => {
@@ -23,7 +21,6 @@ const AppContainer: React.FC = () => {
     }),
     [moveBox]
   );
-  console.log(boxList);
   return (
     <div ref={drop} className="w-full h-full">
       {Object.keys(boxList).map((key) => (

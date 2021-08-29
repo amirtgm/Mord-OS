@@ -1,6 +1,7 @@
 import React, { createContext, FC } from "react";
 import { v4 as uuid } from "uuid";
 import useLocalState from "@amirtgm/use-local-state";
+import { Box, BoxesContextState } from "../types/box";
 
 const contextDefaultValues: BoxesContextState = {
   boxList: [
@@ -16,7 +17,7 @@ const contextDefaultValues: BoxesContextState = {
     },
   ],
   openApp: () => {},
-  closeApp: () => {},
+  closeBox: () => {},
   moveBox: () => {},
 };
 interface BoxesProviderProps {
@@ -36,12 +37,12 @@ const BoxesProvider: FC<BoxesProviderProps> = ({
     "boxList"
   );
 
-  const openApp = (box?: Box) => {
+  const openApp = (box: Partial<Box>) => {
     setBoxList((draft: Box[]) => {
       setZIndex(zIndex + 1);
       draft.push({
-        top: window.innerHeight / 2 - zIndex * 10,
-        left: window.innerWidth / 2 - zIndex * 10,
+        top: window.innerHeight / 2 - 200 - zIndex * 10,
+        left: window.innerWidth / 2 - 200 - zIndex * 10,
         ...box,
         index: zIndex,
         id: uuid(),
@@ -49,10 +50,13 @@ const BoxesProvider: FC<BoxesProviderProps> = ({
     });
   };
 
-  const closeApp = (id: string) => {
+  const closeBox = (id: string) => {
     setBoxList((draft: Box[]) => {
       const boxIndex = draft.findIndex((t) => t.id === id);
       draft.splice(boxIndex, 1);
+      if (draft.length === 0) {
+        setZIndex(1);
+      }
     });
   };
   const moveBox = (box: Box) => {
@@ -69,7 +73,7 @@ const BoxesProvider: FC<BoxesProviderProps> = ({
       value={{
         boxList,
         openApp,
-        closeApp,
+        closeBox,
         moveBox,
       }}
     >

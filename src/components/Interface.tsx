@@ -1,6 +1,5 @@
 import React from "react";
 import AppContainer from "./AppContainer";
-import AppWindow from "./AppWindow";
 import Dock from "./Dock";
 import TopBar from "./TopBar";
 
