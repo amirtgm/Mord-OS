@@ -12,13 +12,14 @@ const contextDefaultValues: BoxesContextState = {
     },
     {
       top: 100,
-      left: 2,
+      left: 300,
       id: "h2",
     },
   ],
   openApp: () => {},
-  closeBox: () => {},
   moveBox: () => {},
+  closeBox: () => {},
+  bringToTop: () => {},
 };
 interface BoxesProviderProps {
   children: React.ReactNode;
@@ -41,8 +42,9 @@ const BoxesProvider: FC<BoxesProviderProps> = ({
     setBoxList((draft: Box[]) => {
       setZIndex(zIndex + 1);
       draft.push({
-        top: window.innerHeight / 2 - 200 - zIndex * 20,
-        left: window.innerWidth / 2 - 200 - zIndex * 20,
+        top: 100 - zIndex * 4,
+        left: 100 - zIndex * 4,
+
         ...box,
         index: zIndex,
         id: uuid(),
@@ -59,14 +61,21 @@ const BoxesProvider: FC<BoxesProviderProps> = ({
       }
     });
   };
-  const moveBox = (box: Box) => {
+
+  const bringToTop = (id: string) => {
     setBoxList((draft: Box[]) => {
-      const boxIndex = draft.findIndex((t) => t.id === box.id);
-      draft[boxIndex].top = box.top;
-      draft[boxIndex].left = box.left;
+      const boxIndex = draft.findIndex((t) => t.id === id);
       draft[boxIndex].index = zIndex + 1;
     });
     setZIndex(zIndex + 1);
+  };
+
+  const moveBox = ({ id, top, left }: Box) => {
+    setBoxList((draft: Box[]) => {
+      const boxIndex = draft.findIndex((t) => t.id === id);
+      draft[boxIndex].top = top;
+      draft[boxIndex].left = left;
+    });
   };
   return (
     <BoxesContext.Provider
@@ -75,6 +84,7 @@ const BoxesProvider: FC<BoxesProviderProps> = ({
         openApp,
         closeBox,
         moveBox,
+        bringToTop,
       }}
     >
       {children}

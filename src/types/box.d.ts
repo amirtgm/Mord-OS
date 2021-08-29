@@ -4,13 +4,14 @@ export interface Box {
   id: string;
   index?: number;
   app?: apps;
-  top: number | string;
-  left: number | string;
+  top: number;
+  left: number;
 }
 
 export interface BoxesContextState {
   boxList: Box[];
   openApp: (Box: Partial<Box>) => void;
+  moveBox: (Box: Box) => void;
   closeBox: (id: string) => void;
-  moveBox: (box: Box) => void;
+  bringToTop: (id: string) => void;
 }

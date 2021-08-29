@@ -7,11 +7,11 @@ const Reader: FC = () => {
       res.json()
     )
   );
-  console.log("Reader");
+
   return (
     <div className="flex flex-col justify-around w-full p-4">
       {!isLoading &&
-        data?.map((comment) => {
+        data?.slice(5, 10)?.map((comment) => {
           return (
             <div
               className="w-full p-2 mb-4 bg-gray-200 rounded-lg"
@@ -32,5 +32,5 @@ const Reader: FC = () => {
     </div>
   );
 };
-
+Reader.whyDidYouRender = true;
 export default Reader;
