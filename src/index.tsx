@@ -1,20 +1,25 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
-import App from "./App";
-import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
-import reportWebVitals from "./reportWebVitals";
+import { QueryClient, QueryClientProvider } from "react-query";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import BoxesProvider from "./providers/boxes.provider";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
+
+const queryClient = new QueryClient();
 
 ReactDOM.render(
   <React.StrictMode>
-    <DndProvider backend={HTML5Backend}>
-      <BoxesProvider>
-        <App />
-      </BoxesProvider>
-    </DndProvider>
+    <QueryClientProvider client={queryClient}>
+      <DndProvider backend={HTML5Backend}>
+        <BoxesProvider>
+          <App />
+        </BoxesProvider>
+      </DndProvider>
+    </QueryClientProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

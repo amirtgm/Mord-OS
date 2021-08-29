@@ -41,8 +41,8 @@ const BoxesProvider: FC<BoxesProviderProps> = ({
     setBoxList((draft: Box[]) => {
       setZIndex(zIndex + 1);
       draft.push({
-        top: window.innerHeight / 2 - 200 - zIndex * 10,
-        left: window.innerWidth / 2 - 200 - zIndex * 10,
+        top: window.innerHeight / 2 - 200 - zIndex * 20,
+        left: window.innerWidth / 2 - 200 - zIndex * 20,
         ...box,
         index: zIndex,
         id: uuid(),

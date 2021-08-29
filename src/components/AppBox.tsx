@@ -1,4 +1,4 @@
-import React, { memo, useContext } from "react";
+import React, { memo, useContext, useMemo } from "react";
 import { useDrag } from "react-dnd";
 import { BoxesContext } from "../providers/boxes.provider";
 import { apps } from "../types/apps";
@@ -15,6 +15,8 @@ const getStyles = ({ left, top, index, isDragging }: any) => {
     transform,
     WebkitTransform: transform,
     zIndex: index,
+    opacity: isDragging ? 0 : 1,
+    height: isDragging ? 0 : "",
   };
 };
 const AppBox: React.FC<IWindowProps> = memo(
@@ -30,7 +32,7 @@ const AppBox: React.FC<IWindowProps> = memo(
       }),
       [id, left, top]
     );
-    const appLoader = () => {
+    const appLoader = useMemo(() => {
       switch (app) {
         case apps.BROWSER:
           return <Browser />;
@@ -42,7 +44,7 @@ const AppBox: React.FC<IWindowProps> = memo(
         default:
           break;
       }
-    };
+    }, [app]);
 
     return (
       <div
@@ -60,7 +62,7 @@ const AppBox: React.FC<IWindowProps> = memo(
             className="w-3 h-3 mx-1 bg-red-400 rounded-full hover:bg-red-600"
           ></div>
         </div>
-        <div className="flex-auto">{appLoader()}</div>
+        <div className="flex-auto overflow-y-scroll">{appLoader}</div>
       </div>
     );
   }
