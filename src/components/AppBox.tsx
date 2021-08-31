@@ -1,5 +1,5 @@
 import React, { memo, useContext, useMemo } from "react";
-import Draggable, { DraggableData, DraggableEvent } from "react-draggable";
+import Draggable, { DraggableData } from "react-draggable";
 import { BoxesContext } from "../providers/boxes.provider";
 import { apps } from "../types/apps";
 import { Box } from "../types/box";
@@ -45,12 +45,13 @@ const AppBox: React.FC<IWindowProps> = memo(({ id, left, app, top, index }) => {
         className="absolute"
         ref={dragRef}
         style={{ zIndex: index }}
+        onClick={() => bringToTop(id)}
         // eslint-disable-next-line jsx-a11y/aria-role
         role="DraggableBox"
       >
         <div
           style={{ minHeight: "20vh", minWidth: "40vh" }}
-          className="relative flex flex-col justify-between pt-3 overflow-auto rounded-lg resize frost"
+          className="relative flex flex-col justify-between pt-5 overflow-auto rounded-lg resize frost"
         >
           <div className="fixed top-0 flex justify-end w-full p-1 bg-gray-500 rounded-t-lg handle">
             <div className="w-3 h-3 mx-1 bg-green-400 rounded-full hover:bg-green-600"></div>

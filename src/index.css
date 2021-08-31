@@ -8,3 +8,8 @@
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
+
+.iframe-wrapper {
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
