@@ -4,7 +4,10 @@ import Interface from "./components/Interface";
 
 function App() {
   return (
-    <div className="w-screen h-screen bg-gradient-to-br from-blue-300 to-indigo-500">
+    <div
+      style={{ backgroundImage: "url('/background.jpg')" }}
+      className="w-screen h-screen bg-no-repeat bg-cover"
+    >
       <Interface />
     </div>
   );

@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  @variants responsive {
+    .masonry {
+      column-count: 2;
+      column-gap: 1.5em;
+    }
+    .break-inside {
+      break-inside: avoid;
+    }
+  }
+}
+
 .frost {
   box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2);
   background-color: rgba(255, 255, 255, 0.25);
@@ -12,4 +24,11 @@
 .iframe-wrapper {
   overflow: auto;
   -webkit-overflow-scrolling: touch;
+}
+
+.appBox-container {
+  min-height: 40vh;
+  min-width: 60vh;
+  max-width: 90vw;
+  max-height: 90vh;
 }
