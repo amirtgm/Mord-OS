@@ -5,18 +5,24 @@ import { apps } from "../types/apps";
 const Dock: React.FC = () => {
   const { openApp } = useContext(BoxesContext);
   return (
-    <div className="flex flex-row justify-center w-7/12 h-20 p-2 mx-auto mb-5 rounded-xl frost">
-      <div
+    <div className="flex flex-row justify-center h-20 p-2 mx-auto mb-5 rounded-xl frost">
+      <img
+        src="/reader.png"
+        alt=""
         onClick={() => openApp({ app: apps.READER })}
-        className="w-16 h-16 mx-2 bg-purple-600 rounded-xl"
+        className="w-16 h-16 mx-2 cursor-pointer "
       />
-      <div
+      <img
+        src="/gallery.png"
+        alt=""
         onClick={() => openApp({ app: apps.GALLERY })}
-        className="w-16 h-16 mx-2 bg-pink-600 rounded-xl"
+        className="w-16 h-16 mx-2 cursor-pointer "
       />
-      <div
+      <img
+        src="/browser.png"
+        alt=""
         onClick={() => openApp({ app: apps.BROWSER })}
-        className="w-16 h-16 mx-2 bg-yellow-200 rounded-xl"
+        className="w-16 h-16 mx-2 cursor-pointer "
       />
     </div>
   );
