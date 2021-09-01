@@ -42,7 +42,7 @@ const AppBox: React.FC<IWindowProps> = memo(({ id, left, app, top, index }) => {
       onStart={() => bringToTop(id)}
     >
       <div
-        className="absolute"
+        className="absolute appBox-container"
         ref={dragRef}
         style={{ zIndex: index }}
         onClick={() => bringToTop(id)}
@@ -50,18 +50,21 @@ const AppBox: React.FC<IWindowProps> = memo(({ id, left, app, top, index }) => {
         role="DraggableBox"
       >
         <div
-          style={{ minHeight: "20vh", minWidth: "40vh" }}
-          className="relative flex flex-col justify-between pt-5 overflow-auto rounded-lg resize frost"
+          style={{ height: "50vh", width: "70vh" }}
+          className="relative flex flex-col justify-between w-full pt-5 overflow-auto rounded-lg resize frost h-80"
         >
-          <div className="fixed top-0 flex justify-end w-full p-1 bg-gray-500 rounded-t-lg handle">
+          <div className="fixed top-0 flex justify-end flex-auto w-full p-1 bg-gray-500 rounded-t-lg handle">
             <div className="w-3 h-3 mx-1 bg-green-400 rounded-full hover:bg-green-600"></div>
             <div className="w-3 h-3 mx-1 bg-yellow-400 rounded-full hover:bg-yellow-600"></div>
             <div
-              onClick={() => closeBox(id)}
+              onClick={(event) => {
+                event.stopPropagation();
+                closeBox(id);
+              }}
               className="w-3 h-3 mx-1 bg-red-400 rounded-full hover:bg-red-600"
             ></div>
           </div>
-          <div className="flex-auto">{appLoader}</div>
+          <div className="flex-auto pb-2">{appLoader}</div>
         </div>
       </div>
     </Draggable>
