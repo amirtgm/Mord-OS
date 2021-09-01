@@ -64,7 +64,7 @@ const AppBox: React.FC<IWindowProps> = memo(({ id, left, app, top, index }) => {
               className="w-3 h-3 mx-1 bg-red-400 rounded-full hover:bg-red-600"
             ></div>
           </div>
-          <div className="flex-auto pb-2">{appLoader}</div>
+          <div className="box-border flex-auto pb-2">{appLoader}</div>
         </div>
       </div>
     </Draggable>

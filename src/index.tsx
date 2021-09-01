@@ -3,24 +3,27 @@ import "./wdyr"; // <--- first import
 import React from "react";
 import ReactDOM from "react-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
 import BoxesProvider from "./providers/boxes.provider";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      notifyOnChangeProps: "tracked",
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 ReactDOM.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <DndProvider backend={HTML5Backend}>
-        <BoxesProvider>
-          <App />
-        </BoxesProvider>
-      </DndProvider>
+      <BoxesProvider>
+        <App />
+      </BoxesProvider>
     </QueryClientProvider>
   </React.StrictMode>,
   document.getElementById("root")

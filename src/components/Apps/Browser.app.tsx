@@ -1,7 +1,7 @@
-import React, { FC, useState, useMemo } from "react";
+import React, { FC, useState, useMemo, useEffect, memo } from "react";
 import useLocalState from "@amirtgm/use-local-state";
 
-const Browser: FC = () => {
+const BrowserApp: FC = memo(() => {
   const [inputUrl, setInputUrl] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -63,14 +63,18 @@ const Browser: FC = () => {
   const url = useMemo(() => {
     return urls.filter((url) => url.active)[0]?.url;
   }, [urls]);
-
+  useEffect(() => {
+    setUrls((draft) => {
+      draft = [];
+    });
+  }, []);
   return (
     <div className="relative w-full h-full iframe-wrapper">
       <div className="flex flex-row items-center w-full px-2 py-1 bg-gray-600">
         <svg
           onClick={() => historyMutations("back")}
           xmlns="http://www.w3.org/2000/svg"
-          className="inline-block w-6 h-6 text-white"
+          className="inline-block w-6 h-6 text-white cursor-pointer"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -85,7 +89,7 @@ const Browser: FC = () => {
         <svg
           onCanPlay={() => historyMutations("forward")}
           xmlns="http://www.w3.org/2000/svg"
-          className="inline-block w-6 h-6 ml-2 text-white"
+          className="inline-block w-6 h-6 ml-2 text-white cursor-pointer"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -99,6 +103,7 @@ const Browser: FC = () => {
         </svg>
         <input
           className="inline-block w-2/5 py-1 pl-4 ml-4 text-white bg-gray-700 rounded-2xl"
+          placeholder="https://example.com"
           type="text"
           value={inputUrl}
           onKeyDown={onKeyDown}
@@ -120,6 +125,9 @@ const Browser: FC = () => {
             />
           </svg>
         )}
+        <span className="inline-block ml-2 text-sm text-gray-500">
+          Hint* press enter after writing the url
+        </span>
       </div>
       {url && (
         <iframe
@@ -219,6 +227,6 @@ const Browser: FC = () => {
       )}
     </div>
   );
-};
+});
 
-export default Browser;
+export default BrowserApp;

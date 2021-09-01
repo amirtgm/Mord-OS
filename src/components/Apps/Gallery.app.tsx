@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, memo } from "react";
 import { useQuery } from "react-query";
 import { createApi } from "unsplash-js";
 
@@ -6,7 +6,7 @@ const unsplash = createApi({
   accessKey: "qje0zQPWbuwxieNSDAY1qulJ5kr6Jq34PNSRLaBjGiQ",
 });
 
-const Gallery: FC = () => {
+const Gallery: FC = memo(() => {
   const { isLoading, data } = useQuery<any>("Gallery", () =>
     unsplash.search
       .getPhotos({ query: "wanderlust", perPage: 30, page: 1 })
@@ -32,6 +32,6 @@ const Gallery: FC = () => {
         ))}
     </div>
   );
-};
+});
 
 export default Gallery;
