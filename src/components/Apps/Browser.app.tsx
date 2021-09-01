@@ -1,4 +1,4 @@
-import React, { FC, useState, useMemo, useEffect, memo } from "react";
+import React, { FC, useState, useMemo, memo } from "react";
 import useLocalState from "@amirtgm/use-local-state";
 
 const BrowserApp: FC = memo(() => {
@@ -63,11 +63,7 @@ const BrowserApp: FC = memo(() => {
   const url = useMemo(() => {
     return urls.filter((url) => url.active)[0]?.url;
   }, [urls]);
-  useEffect(() => {
-    setUrls((draft) => {
-      draft = [];
-    });
-  }, []);
+
   return (
     <div className="relative w-full h-full iframe-wrapper">
       <div className="flex flex-row items-center w-full px-2 py-1 bg-gray-600">
